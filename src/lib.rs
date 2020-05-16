@@ -1,35 +1,8 @@
-use std::env::args;
+//! # SlotVec
+//!
+//! SlotVec is a Vec where you can take out and replace values without increasing the
+//! size of the map.
 
-fn main() {
-
-    let mut mycoll = Collection::new();
-
-    mycoll.add(1);
-    mycoll.add(2);
-    mycoll.add(3);
-
-    println!("{:?}", mycoll);
-
-    let test = mycoll[1];
-
-    println!("test = {:?}", test);
-
-    let test2 = mycoll.take(1);
-    println!("{:?}", mycoll);
-    println!("test = {:?}", test2);
-
-    let index = mycoll.add(4);
-    mycoll.add(5);
-    println!("test = {:?}", mycoll);
-    
-    mycoll.take(index);
-    println!("test = {:?}", mycoll);
-    for item in mycoll {
-        println!("{}", item);
-    }
-
-
-}
 
 use std::ops::{Index, IndexMut};
 use std::iter::{Iterator, IntoIterator};
@@ -176,4 +149,39 @@ enum CollectionState {
     Full(u32),
     NotFull(u32, u32),
 
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn basic_operations_doesnt_panic() {
+        let mut mycoll = Collection::new();
+
+        mycoll.add(1);
+        mycoll.add(2);
+        mycoll.add(3);
+    
+        println!("{:?}", mycoll);
+    
+        let test = mycoll[1];
+    
+        println!("test = {:?}", test);
+    
+        let test2 = mycoll.take(1);
+        println!("{:?}", mycoll);
+        println!("test = {:?}", test2);
+    
+        let index = mycoll.add(4);
+        mycoll.add(5);
+        println!("test = {:?}", mycoll);
+        
+        mycoll.take(index);
+        println!("test = {:?}", mycoll);
+        for item in mycoll {
+            println!("{}", item);
+        }
+    }
 }
